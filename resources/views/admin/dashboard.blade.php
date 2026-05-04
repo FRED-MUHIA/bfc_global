@@ -30,41 +30,41 @@
         </div>
     </section>
 
-    <section class="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-9">
-        <div class="rounded-lg border border-sand bg-white p-5">
-            <p class="text-sm font-bold uppercase tracking-[0.12em] text-ember">Published</p>
+    <section class="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-[repeat(auto-fit,minmax(8.75rem,1fr))]">
+        <div class="min-h-32 rounded-lg border border-sand bg-white p-4">
+            <p class="text-xs font-bold uppercase tracking-[0.08em] text-ember">Published</p>
             <p class="mt-2 text-3xl font-bold text-pine">{{ $publishedCount }}</p>
         </div>
-        <div class="rounded-lg border border-sand bg-white p-5">
-            <p class="text-sm font-bold uppercase tracking-[0.12em] text-ember">Drafts</p>
+        <div class="min-h-32 rounded-lg border border-sand bg-white p-4">
+            <p class="text-xs font-bold uppercase tracking-[0.08em] text-ember">Drafts</p>
             <p class="mt-2 text-3xl font-bold text-pine">{{ $draftCount }}</p>
         </div>
-        <div class="rounded-lg border border-sand bg-white p-5">
-            <p class="text-sm font-bold uppercase tracking-[0.12em] text-ember">Contacts</p>
+        <div class="min-h-32 rounded-lg border border-sand bg-white p-4">
+            <p class="text-xs font-bold uppercase tracking-[0.08em] text-ember">Contacts</p>
             <p class="mt-2 text-3xl font-bold text-pine">{{ $contactCount }}</p>
         </div>
-        <div class="rounded-lg border border-sand bg-white p-5">
-            <p class="text-sm font-bold uppercase tracking-[0.12em] text-ember">Donations</p>
+        <div class="min-h-32 rounded-lg border border-sand bg-white p-4">
+            <p class="text-xs font-bold uppercase tracking-[0.08em] text-ember">Donations</p>
             <p class="mt-2 text-3xl font-bold text-pine">{{ $donationCount }}</p>
         </div>
-        <a href="{{ route('admin.event-registrations.index') }}" class="rounded-lg border border-sand bg-white p-5 transition hover:bg-mist/40">
-            <p class="text-sm font-bold uppercase tracking-[0.12em] text-ember">Event Signups</p>
+        <a href="{{ route('admin.event-registrations.index') }}" class="min-h-32 rounded-lg border border-sand bg-white p-4 transition hover:bg-mist/40">
+            <p class="text-xs font-bold uppercase tracking-[0.08em] text-ember">Event Signups</p>
             <p class="mt-2 text-3xl font-bold text-pine">{{ $eventRegistrationCount }}</p>
         </a>
-        <a href="{{ route('admin.program-registrations.index') }}" class="rounded-lg border border-sand bg-white p-5 transition hover:bg-mist/40">
-            <p class="text-sm font-bold uppercase tracking-[0.12em] text-ember">Program Signups</p>
+        <a href="{{ route('admin.program-registrations.index') }}" class="min-h-32 rounded-lg border border-sand bg-white p-4 transition hover:bg-mist/40">
+            <p class="text-xs font-bold uppercase tracking-[0.08em] text-ember">Program Signups</p>
             <p class="mt-2 text-3xl font-bold text-pine">{{ $programRegistrationCount }}</p>
         </a>
-        <a href="{{ route('admin.emails.index') }}" class="rounded-lg border border-sand bg-white p-5 transition hover:bg-mist/40">
-            <p class="text-sm font-bold uppercase tracking-[0.12em] text-ember">Emails</p>
+        <a href="{{ route('admin.emails.index') }}" class="min-h-32 rounded-lg border border-sand bg-white p-4 transition hover:bg-mist/40">
+            <p class="text-xs font-bold uppercase tracking-[0.08em] text-ember">Emails</p>
             <p class="mt-2 text-3xl font-bold text-pine">{{ $newsletterCount }}</p>
         </a>
-        <a href="{{ route('admin.media.index') }}" class="rounded-lg border border-sand bg-white p-5 transition hover:bg-mist/40">
-            <p class="text-sm font-bold uppercase tracking-[0.12em] text-ember">Media</p>
+        <a href="{{ route('admin.media.index') }}" class="min-h-32 rounded-lg border border-sand bg-white p-4 transition hover:bg-mist/40">
+            <p class="text-xs font-bold uppercase tracking-[0.08em] text-ember">Media</p>
             <p class="mt-2 text-3xl font-bold text-pine">{{ $mediaCount }}</p>
         </a>
-        <a href="{{ route('admin.blog.index') }}" class="rounded-lg border border-sand bg-white p-5 transition hover:bg-mist/40">
-            <p class="text-sm font-bold uppercase tracking-[0.12em] text-ember">Blogs</p>
+        <a href="{{ route('admin.blog.index') }}" class="min-h-32 rounded-lg border border-sand bg-white p-4 transition hover:bg-mist/40">
+            <p class="text-xs font-bold uppercase tracking-[0.08em] text-ember">Blogs</p>
             <p class="mt-2 text-3xl font-bold text-pine">{{ $blogCount }}</p>
         </a>
     </section>
