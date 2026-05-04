@@ -207,8 +207,31 @@ class AdminPageController extends Controller
         $site = $this->editableSite();
 
         return collect($definition['source_keys'] ?? [])
-            ->mapWithKeys(fn (string $key): array => [$key => data_get($site, $key)])
+            ->mapWithKeys(fn (string $key): array => [$key => $this->editableSourceValue($key, data_get($site, $key))])
             ->filter(fn (mixed $value): bool => $value !== null)
+            ->all();
+    }
+
+    private function editableSourceValue(string $key, mixed $value): mixed
+    {
+        if ($key !== 'ministry_programs' || ! is_array($value)) {
+            return $value;
+        }
+
+        return collect($value)
+            ->map(function (array $program): array {
+                $ordered = [
+                    'slug' => $program['slug'] ?? '',
+                    'title' => $program['title'] ?? '',
+                    'menu_label' => $program['menu_label'] ?? '',
+                    'image' => $program['image'] ?? '',
+                ];
+
+                return [
+                    ...$ordered,
+                    ...collect($program)->except(array_keys($ordered))->all(),
+                ];
+            })
             ->all();
     }
 

@@ -62,9 +62,13 @@
             <input name="{{ $name }}" value="{{ $stringValue }}" class="field-input">
         @endif
         @if ($isImageField)
-            <input type="file" name="{{ $uploadName }}" accept="image/*" class="field-input bg-white">
+            <div class="rounded-lg border border-sand bg-cream/50 p-3">
+                <span class="block text-xs font-bold uppercase tracking-[0.1em] text-ember">Upload New Image</span>
+                <input type="file" name="{{ $uploadName }}" accept="image/*" class="mt-2 block w-full rounded-lg border border-sand bg-white px-4 py-3 text-sm">
+                <p class="mt-2 text-xs text-slate/60">Uploading a file will replace the image URL above after you save.</p>
+            </div>
             @if ($stringValue !== '')
-                <img src="{{ $stringValue }}" alt="" class="h-24 w-36 rounded-lg object-cover">
+                <img src="{{ $stringValue }}" alt="" class="h-32 w-full max-w-sm rounded-lg object-cover">
             @endif
         @endif
     </label>
