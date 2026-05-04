@@ -6,7 +6,6 @@ use App\Models\ContactInquiry;
 use App\Models\BlogPost;
 use App\Models\Donation;
 use App\Models\EventRegistration;
-use App\Models\MediaAsset;
 use App\Models\NewsletterSubscription;
 use App\Models\PageContent;
 use App\Models\ProgramRegistration;
@@ -30,13 +29,7 @@ class AdminPageController extends Controller
             'eventRegistrationCount' => EventRegistration::query()->count(),
             'programRegistrationCount' => ProgramRegistration::query()->count(),
             'newsletterCount' => NewsletterSubscription::query()->count(),
-            'mediaCount' => MediaAsset::query()->count(),
             'blogCount' => BlogPost::query()->count(),
-            'latestMediaImages' => MediaAsset::query()
-                ->where('mime_type', 'like', 'image/%')
-                ->latest()
-                ->take(4)
-                ->get(),
         ]);
     }
 

@@ -51,74 +51,10 @@
             <p class="text-xs font-bold uppercase tracking-[0.08em] text-ember">Emails</p>
             <p class="mt-2 text-3xl font-bold text-pine">{{ $newsletterCount }}</p>
         </a>
-        <a href="{{ route('admin.media.index') }}" class="min-h-32 rounded-lg border border-sand bg-white p-4 transition hover:bg-mist/40">
-            <p class="text-xs font-bold uppercase tracking-[0.08em] text-ember">Media</p>
-            <p class="mt-2 text-3xl font-bold text-pine">{{ $mediaCount }}</p>
-        </a>
         <a href="{{ route('admin.blog.index') }}" class="min-h-32 rounded-lg border border-sand bg-white p-4 transition hover:bg-mist/40">
             <p class="text-xs font-bold uppercase tracking-[0.08em] text-ember">Blogs</p>
             <p class="mt-2 text-3xl font-bold text-pine">{{ $blogCount }}</p>
         </a>
-    </section>
-
-    <section class="mt-8 rounded-lg border border-sand bg-white p-5">
-        <div class="grid gap-6 lg:grid-cols-[1fr_1.1fr]">
-            <div>
-                <h2 class="text-2xl">Quick Image Upload</h2>
-                <p class="mt-1 text-sm text-slate/70">Upload a dashboard image and copy the generated link for programs, events, page builders, or branding.</p>
-
-                @if (session('uploaded_media_url'))
-                    <div class="mt-4 rounded-lg border border-sage/30 bg-mist p-3">
-                        <p class="text-xs font-bold uppercase tracking-[0.1em] text-pine">Uploaded Link</p>
-                        <div class="mt-2 flex flex-wrap gap-2">
-                            <input readonly value="{{ session('uploaded_media_url') }}" class="min-w-0 flex-1 rounded-lg border border-sand bg-white px-3 py-2 text-xs text-slate" data-dashboard-upload-url>
-                            <button type="button" class="rounded-full bg-pine px-4 py-2 text-xs font-bold text-white hover:bg-sage" data-copy-dashboard-upload="{{ session('uploaded_media_url') }}">Copy</button>
-                        </div>
-                    </div>
-                @endif
-
-                @if ($errors->has('media'))
-                    <p class="mt-3 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800">{{ $errors->first('media') }}</p>
-                @endif
-
-                <form method="POST" action="{{ route('admin.media.store') }}" enctype="multipart/form-data" class="mt-5 grid gap-4">
-                    @csrf
-                    <input type="hidden" name="return_to" value="dashboard">
-                    <input type="hidden" name="image_only" value="1">
-                    <label class="grid gap-2">
-                        <span class="text-sm font-bold text-pine">Image Name</span>
-                        <input name="name" value="{{ old('name') }}" class="field-input" placeholder="BUILD - Campus Discipleship">
-                    </label>
-                    <label class="grid gap-2">
-                        <span class="text-sm font-bold text-pine">Image File</span>
-                        <input type="file" name="media" accept="image/*" class="block w-full rounded-lg border border-sand bg-white px-4 py-3 text-sm" required>
-                    </label>
-                    <button type="submit" class="w-fit rounded-full bg-pine px-6 py-3 text-sm font-bold text-white hover:bg-sage">Upload Image</button>
-                    <p class="text-xs text-slate/60">JPG, PNG, WebP, GIF, or SVG. Maximum file size: 5 MB.</p>
-                </form>
-            </div>
-
-            <div>
-                <div class="mb-3 flex flex-wrap items-center justify-between gap-2">
-                    <h3 class="text-xl">Latest Images</h3>
-                    <a href="{{ route('admin.media.index') }}" class="text-sm font-bold text-pine hover:text-ember">View Media Library</a>
-                </div>
-                <div class="grid gap-3 sm:grid-cols-2">
-                    @forelse ($latestMediaImages as $asset)
-                        @php($assetUrl = url($asset->url))
-                        <article class="overflow-hidden rounded-lg border border-sand bg-cream">
-                            <img src="{{ $asset->url }}" alt="{{ $asset->name }}" class="h-32 w-full object-cover" loading="lazy" decoding="async">
-                            <div class="p-3">
-                                <p class="truncate text-sm font-bold text-pine">{{ $asset->name }}</p>
-                                <button type="button" class="mt-2 rounded-full border border-sand bg-white px-3 py-1.5 text-xs font-bold text-slate hover:bg-mist" data-copy-dashboard-upload="{{ $assetUrl }}">Copy Link</button>
-                            </div>
-                        </article>
-                    @empty
-                        <p class="rounded-lg border border-sand bg-cream p-4 text-sm text-slate/70 sm:col-span-2">No images uploaded yet.</p>
-                    @endforelse
-                </div>
-            </div>
-        </div>
     </section>
 
     <section class="mt-8 rounded-lg border border-sand bg-white p-5">
@@ -241,16 +177,4 @@
         </div>
     </section>
 
-    <script>
-        document.querySelectorAll('[data-copy-dashboard-upload]').forEach((button) => {
-            button.addEventListener('click', async () => {
-                await navigator.clipboard.writeText(button.dataset.copyDashboardUpload);
-                const original = button.textContent;
-                button.textContent = 'Copied';
-                window.setTimeout(() => {
-                    button.textContent = original;
-                }, 1400);
-            });
-        });
-    </script>
 @endsection
