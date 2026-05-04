@@ -32,14 +32,6 @@
 
     <section class="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-[repeat(auto-fit,minmax(8.75rem,1fr))]">
         <div class="min-h-32 rounded-lg border border-sand bg-white p-4">
-            <p class="text-xs font-bold uppercase tracking-[0.08em] text-ember">Published</p>
-            <p class="mt-2 text-3xl font-bold text-pine">{{ $publishedCount }}</p>
-        </div>
-        <div class="min-h-32 rounded-lg border border-sand bg-white p-4">
-            <p class="text-xs font-bold uppercase tracking-[0.08em] text-ember">Drafts</p>
-            <p class="mt-2 text-3xl font-bold text-pine">{{ $draftCount }}</p>
-        </div>
-        <div class="min-h-32 rounded-lg border border-sand bg-white p-4">
             <p class="text-xs font-bold uppercase tracking-[0.08em] text-ember">Contacts</p>
             <p class="mt-2 text-3xl font-bold text-pine">{{ $contactCount }}</p>
         </div>

@@ -25,8 +25,6 @@ class AdminPageController extends Controller
         return view('admin.dashboard', [
             'pages' => $this->pagesWithContent(),
             'maintenanceEnabled' => $this->maintenanceEnabled(),
-            'publishedCount' => PageContent::query()->where('is_published', true)->count(),
-            'draftCount' => PageContent::query()->where('is_published', false)->count(),
             'contactCount' => ContactInquiry::query()->count(),
             'donationCount' => Donation::query()->count(),
             'eventRegistrationCount' => EventRegistration::query()->count(),
