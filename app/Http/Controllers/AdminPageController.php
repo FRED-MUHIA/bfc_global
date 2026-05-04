@@ -34,6 +34,11 @@ class AdminPageController extends Controller
             'newsletterCount' => NewsletterSubscription::query()->count(),
             'mediaCount' => MediaAsset::query()->count(),
             'blogCount' => BlogPost::query()->count(),
+            'latestMediaImages' => MediaAsset::query()
+                ->where('mime_type', 'like', 'image/%')
+                ->latest()
+                ->take(4)
+                ->get(),
         ]);
     }
 

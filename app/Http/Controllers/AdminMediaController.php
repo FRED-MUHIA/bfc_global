@@ -22,15 +22,18 @@ class AdminMediaController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'media' => ['required', 'file', 'mimes:jpg,jpeg,png,webp,gif,svg,pdf,mp4,mov,webm', 'max:5120'],
+            'media' => $request->boolean('image_only')
+                ? ['required', 'image', 'max:5120']
+                : ['required', 'file', 'mimes:jpg,jpeg,png,webp,gif,svg,pdf,mp4,mov,webm', 'max:5120'],
             'name' => ['nullable', 'string', 'max:160'],
+            'return_to' => ['nullable', 'string', 'in:dashboard'],
         ]);
 
         $file = $validated['media'];
         $upload = PublicUpload::store($file, 'media-library');
         $originalName = $file->getClientOriginalName();
 
-        MediaAsset::query()->create([
+        $asset = MediaAsset::query()->create([
             'name' => $validated['name'] ?: Str::headline(pathinfo($originalName, PATHINFO_FILENAME)),
             'original_name' => $originalName,
             'path' => $upload['path'],
@@ -38,6 +41,13 @@ class AdminMediaController extends Controller
             'mime_type' => $file->getMimeType(),
             'size' => $file->getSize() ?: 0,
         ]);
+
+        if (($validated['return_to'] ?? null) === 'dashboard') {
+            return redirect()
+                ->route('admin.dashboard')
+                ->with('status', 'Image uploaded. Copy the link below to use it on any page.')
+                ->with('uploaded_media_url', url($asset->url));
+        }
 
         return redirect()
             ->route('admin.media.index')
