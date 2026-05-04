@@ -1,0 +1,135 @@
+@import url("https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Nunito+Sans:wght@400;500;600;700;800&display=swap");
+@import "tailwindcss";
+
+@source "../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php";
+@source "../../storage/framework/views/*.php";
+@source "../**/*.blade.php";
+@source "../**/*.js";
+
+@theme {
+    --color-cream: #F5F2E7;
+    --color-sand: #E7DEC8;
+    --color-pine: #1F5A3A;
+    --color-sage: #2F7A4E;
+    --color-ember: #B28A2E;
+    --color-coral: #7FA66B;
+    --color-slate: #2A3A31;
+    --color-mist: #DCE7DB;
+    --font-heading: "Lora", "Georgia", serif;
+    --font-body: "Nunito Sans", "Verdana", sans-serif;
+    --shadow-soft: 0 14px 40px -22px rgba(38, 56, 52, 0.35);
+    --animate-rise: rise .75s ease-out both;
+    --animate-fadeIn: fadeIn .9s ease-out both;
+    --animate-pulseSoft: pulseSoft 4s ease-in-out infinite;
+}
+
+@keyframes rise {
+    0% {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes pulseSoft {
+    0%, 100% {
+        opacity: 0.95;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.02);
+    }
+}
+
+@keyframes floatSoft {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@layer base {
+    :root {
+        color-scheme: light;
+    }
+
+    * {
+        @apply border-mist;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        @apply m-0 bg-cream font-body text-slate antialiased;
+        background-image:
+            radial-gradient(circle at 92% 12%, rgba(178, 138, 46, 0.14), transparent 38%),
+            radial-gradient(circle at 8% 85%, rgba(47, 122, 78, 0.12), transparent 36%);
+    }
+
+    h1, h2, h3, h4 {
+        @apply font-heading text-pine;
+    }
+
+    p {
+        @apply leading-relaxed;
+    }
+}
+
+@layer components {
+    .container-base {
+        @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-10;
+    }
+
+    .glass-panel {
+        @apply rounded-3xl border border-white/70 bg-white/80 shadow-soft backdrop-blur-sm;
+    }
+
+    .field-input {
+        @apply w-full rounded-xl border border-sand bg-white px-4 py-3 text-sm text-slate outline-none transition focus:border-sage focus:ring-2 focus:ring-sage/20;
+    }
+
+    .reveal-item {
+        opacity: 0;
+        transform: translateY(22px);
+        transition: opacity 700ms ease, transform 700ms ease;
+        transition-delay: var(--reveal-delay, 0ms);
+    }
+
+    .reveal-item.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .float-soft {
+        animation: floatSoft 6s ease-in-out infinite;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .reveal-item {
+            opacity: 1;
+            transform: none;
+            transition: none;
+        }
+
+        .float-soft {
+            animation: none;
+        }
+    }
+}

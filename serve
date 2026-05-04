@@ -1,0 +1,27 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * Small local launcher so this works:
+ *   php serve run
+ */
+
+$command = $argv[1] ?? null;
+
+if ($command !== 'run') {
+    fwrite(STDOUT, "Usage: php serve run\n");
+    exit(1);
+}
+
+$artisanPath = __DIR__ . DIRECTORY_SEPARATOR . 'artisan';
+
+if (! file_exists($artisanPath)) {
+    fwrite(STDERR, "Could not find artisan in this directory.\n");
+    exit(1);
+}
+
+$serveCmd = PHP_BINARY . ' ' . escapeshellarg($artisanPath) . ' serve --host=127.0.0.1 --port=8000';
+passthru($serveCmd, $exitCode);
+
+exit((int) $exitCode);

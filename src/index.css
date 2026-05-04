@@ -1,0 +1,83 @@
+@import url("https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Nunito+Sans:wght@400;500;600;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes floatSoft {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  * {
+    @apply border-mist;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply m-0 bg-cream font-body text-slate antialiased;
+    background-image: radial-gradient(circle at 92% 12%, rgba(232, 142, 109, 0.14), transparent 38%),
+      radial-gradient(circle at 8% 85%, rgba(94, 138, 120, 0.12), transparent 36%);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-heading text-pine;
+  }
+
+  p {
+    @apply leading-relaxed;
+  }
+}
+
+@layer components {
+  .container-base {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-10;
+  }
+
+  .glass-panel {
+    @apply rounded-3xl border border-white/70 bg-white/80 shadow-soft backdrop-blur-sm;
+  }
+
+  .reveal-item {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 700ms ease, transform 700ms ease;
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  .reveal-item.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .float-soft {
+    animation: floatSoft 6s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal-item {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+
+    .float-soft {
+      animation: none;
+    }
+  }
+}
