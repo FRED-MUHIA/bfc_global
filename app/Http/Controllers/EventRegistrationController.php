@@ -104,23 +104,33 @@ class EventRegistrationController extends Controller
     public function export(): StreamedResponse
     {
         $fileName = 'event-registrations-' . now()->format('Y-m-d') . '.csv';
+        $responseColumns = $this->responseColumns();
 
-        return response()->streamDownload(function (): void {
+        return response()->streamDownload(function () use ($responseColumns): void {
             $handle = fopen('php://output', 'w');
-            fputcsv($handle, ['Name', 'Email', 'Phone', 'Organization', 'Event', 'Date', 'Responses']);
+            fwrite($handle, "\xEF\xBB\xBF");
+            fputcsv($handle, [
+                'Name',
+                'Email',
+                'Phone',
+                'Organization',
+                'Event',
+                'Date',
+                ...array_values($responseColumns),
+            ]);
 
             EventRegistration::query()
                 ->latest()
-                ->chunk(100, function ($registrations) use ($handle): void {
+                ->chunk(100, function ($registrations) use ($handle, $responseColumns): void {
                     foreach ($registrations as $registration) {
                         fputcsv($handle, [
                             $registration->full_name,
                             $registration->email,
-                            $registration->phone,
+                            $this->excelText($registration->phone),
                             $registration->organization,
                             $registration->event_title,
-                            $registration->created_at?->format('Y-m-d H:i:s'),
-                            json_encode($registration->responses ?? [], JSON_UNESCAPED_SLASHES),
+                            $this->excelText($registration->created_at?->format('Y-m-d H:i:s')),
+                            ...$this->responseValues($registration->responses ?? [], array_keys($responseColumns)),
                         ]);
                     }
                 });
@@ -148,6 +158,51 @@ class EventRegistrationController extends Controller
     private function questions(): array
     {
         return $this->siteData('event_registration_questions', []);
+    }
+
+    private function responseColumns(): array
+    {
+        $columns = collect($this->questions())
+            ->mapWithKeys(fn (array $question): array => [
+                (string) $question['key'] => (string) $question['label'],
+            ])
+            ->all();
+
+        EventRegistration::query()
+            ->whereNotNull('responses')
+            ->get(['responses'])
+            ->each(function (EventRegistration $registration) use (&$columns): void {
+                $responses = $registration->responses ?? [];
+
+                foreach (array_keys($responses ?? []) as $key) {
+                    $columns[$key] ??= Str::headline((string) $key);
+                }
+            });
+
+        return $columns;
+    }
+
+    private function responseValues(array $responses, array $keys): array
+    {
+        return collect($keys)
+            ->map(fn (string $key): string => $this->formatCsvValue($responses[$key] ?? ''))
+            ->all();
+    }
+
+    private function formatCsvValue(mixed $value): string
+    {
+        if (is_array($value)) {
+            return collect($value)->map(fn (mixed $item): string => $this->formatCsvValue($item))->implode('; ');
+        }
+
+        return trim((string) $value);
+    }
+
+    private function excelText(?string $value): string
+    {
+        $value = trim((string) $value);
+
+        return $value === '' ? '' : '="' . str_replace('"', '""', $value) . '"';
     }
 
     private function siteData(string $key, mixed $default = null): mixed
