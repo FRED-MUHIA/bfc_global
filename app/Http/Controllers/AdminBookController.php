@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\SiteSetting;
+use App\Support\PublicUpload;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
@@ -101,7 +101,7 @@ class AdminBookController extends Controller
         $cover = $validated['cover_image'] ?? '';
 
         if ($request->hasFile('cover_upload')) {
-            $cover = Storage::url($request->file('cover_upload')->store('books', 'public'));
+            $cover = PublicUpload::store($request->file('cover_upload'), 'books')['url'];
         }
 
         return [

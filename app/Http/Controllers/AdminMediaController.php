@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\MediaAsset;
+use App\Support\PublicUpload;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -26,14 +27,14 @@ class AdminMediaController extends Controller
         ]);
 
         $file = $validated['media'];
-        $path = $file->store('media-library', 'public');
+        $upload = PublicUpload::store($file, 'media-library');
         $originalName = $file->getClientOriginalName();
 
         MediaAsset::query()->create([
             'name' => $validated['name'] ?: Str::headline(pathinfo($originalName, PATHINFO_FILENAME)),
             'original_name' => $originalName,
-            'path' => $path,
-            'url' => Storage::url($path),
+            'path' => $upload['path'],
+            'url' => $upload['url'],
             'mime_type' => $file->getMimeType(),
             'size' => $file->getSize() ?: 0,
         ]);

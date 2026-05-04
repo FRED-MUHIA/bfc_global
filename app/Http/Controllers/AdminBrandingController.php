@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\SiteSetting;
+use App\Support\PublicUpload;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class AdminBrandingController extends Controller
@@ -47,13 +47,11 @@ class AdminBrandingController extends Controller
         ];
 
         if ($request->hasFile('branding.logo_upload')) {
-            $path = $request->file('branding.logo_upload')->store('branding', 'public');
-            $branding['logo_url'] = Storage::url($path);
+            $branding['logo_url'] = PublicUpload::store($request->file('branding.logo_upload'), 'branding')['url'];
         }
 
         if ($request->hasFile('branding.favicon_upload')) {
-            $path = $request->file('branding.favicon_upload')->store('branding', 'public');
-            $branding['favicon_url'] = Storage::url($path);
+            $branding['favicon_url'] = PublicUpload::store($request->file('branding.favicon_upload'), 'branding')['url'];
         }
 
         unset($branding['logo_upload'], $branding['favicon_upload']);

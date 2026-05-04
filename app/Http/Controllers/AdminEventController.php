@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\EventRegistration;
 use App\Models\SiteSetting;
+use App\Support\PublicUpload;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
@@ -150,7 +150,7 @@ class AdminEventController extends Controller
         $image = $validated['image'] ?? '';
 
         if ($request->hasFile('image_upload')) {
-            $image = Storage::url($request->file('image_upload')->store('events', 'public'));
+            $image = PublicUpload::store($request->file('image_upload'), 'events')['url'];
         }
 
         if ($currentSlug && $slug !== $currentSlug) {

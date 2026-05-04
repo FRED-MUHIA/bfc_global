@@ -11,11 +11,11 @@ use App\Models\NewsletterSubscription;
 use App\Models\PageContent;
 use App\Models\ProgramRegistration;
 use App\Models\SiteSetting;
+use App\Support\PublicUpload;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use JsonException;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class AdminPageController extends Controller
@@ -263,6 +263,6 @@ class AdminPageController extends Controller
 
     private function storeUploadedImage(UploadedFile $image): string
     {
-        return Storage::url($image->store('page-builder', 'public'));
+        return PublicUpload::store($image, 'page-builder')['url'];
     }
 }

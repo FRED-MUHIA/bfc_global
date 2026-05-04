@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\BlogPost;
+use App\Support\PublicUpload;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
@@ -101,7 +101,7 @@ class AdminBlogController extends Controller
 
         $image = $validated['image'] ?? $post?->image ?? '';
         if ($request->hasFile('image_upload')) {
-            $image = Storage::url($request->file('image_upload')->store('blog', 'public'));
+            $image = PublicUpload::store($request->file('image_upload'), 'blog')['url'];
         }
 
         $publishedAt = date_create($validated['published_at']);

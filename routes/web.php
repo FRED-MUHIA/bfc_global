@@ -13,6 +13,7 @@ use App\Http\Controllers\AdminPageController;
 use App\Http\Controllers\EventRegistrationController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProgramRegistrationController;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/admin/login', [AdminAuthController::class, 'showLogin'])->name('admin.login');
@@ -79,6 +80,12 @@ Route::controller(InquiryController::class)->group(function (): void {
     Route::post('/forms/newsletter', 'storeNewsletter')->name('forms.newsletter');
     Route::post('/forms/donation', 'storeDonation')->name('forms.donation');
 });
+
+Route::get('/storage/{path}', function (string $path) {
+    abort_unless(Storage::disk('public')->exists($path), 404);
+
+    return Storage::disk('public')->response($path);
+})->where('path', '.*')->name('storage.public');
 
 Route::fallback(function () {
     return response()->view('errors.custom-404', [], 404);

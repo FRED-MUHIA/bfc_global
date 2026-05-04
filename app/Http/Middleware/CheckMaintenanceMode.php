@@ -16,6 +16,10 @@ class CheckMaintenanceMode
             return $next($request);
         }
 
+        if ($request->is('storage/*', 'build/*', 'favicon.ico')) {
+            return $next($request);
+        }
+
         if ($request->is('admin*')) {
             return $next($request);
         }
