@@ -92,8 +92,14 @@ class ProgramRegistrationController extends Controller
 
     public function index(): View
     {
+        $registrations = ProgramRegistration::query()
+            ->latest()
+            ->paginate(50);
+
         return view('admin.program-registrations.index', [
-            'registrations' => ProgramRegistration::query()->latest()->paginate(20),
+            'registrations' => $registrations,
+            'registrationsByProgram' => $registrations->getCollection()
+                ->groupBy(fn (ProgramRegistration $registration): string => $registration->program_title ?: 'Untitled Program'),
         ]);
     }
 
