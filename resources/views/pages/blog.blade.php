@@ -26,7 +26,7 @@
             <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 @foreach ($blogPosts as $post)
                     <article class="overflow-hidden rounded-3xl border border-sand bg-white shadow-soft transition hover:-translate-y-1">
-                        <img src="{{ $post->image }}" alt="{{ $post->title }}" class="h-52 w-full object-cover" loading="lazy">
+                        <img src="{{ $post->image }}" alt="{{ $post->title }}" class="h-52 w-full object-cover" loading="lazy" decoding="async" sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw">
                         <div class="p-6">
                             <p class="text-xs font-bold uppercase tracking-[0.12em] text-ember">{{ $post->category }}</p>
                             <h3 class="mt-2 text-2xl leading-tight">{{ $post->title }}</h3>

@@ -6,7 +6,15 @@
                     aria-hidden="{{ $index !== 0 ? 'true' : 'false' }}"
                     class="absolute inset-0 transition-opacity duration-700 {{ $index === 0 ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0' }}"
                 >
-                    <img src="{{ $slide['image'] }}" alt="{{ $slide['title'] }}" class="h-full w-full object-cover" loading="{{ $index === 0 ? 'eager' : 'lazy' }}">
+                    <img
+                        src="{{ $slide['image'] }}"
+                        alt="{{ $slide['title'] }}"
+                        class="h-full w-full object-cover"
+                        loading="{{ $index === 0 ? 'eager' : 'lazy' }}"
+                        fetchpriority="{{ $index === 0 ? 'high' : 'low' }}"
+                        decoding="async"
+                        sizes="100vw"
+                    >
                     <div class="absolute inset-0 bg-gradient-to-r from-pine/90 via-pine/50 to-transparent"></div>
                     <div class="absolute inset-0 flex items-center">
                         <div class="w-full px-5 py-8 md:max-w-2xl md:px-10 lg:px-16 xl:px-24">

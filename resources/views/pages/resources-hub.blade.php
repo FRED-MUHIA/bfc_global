@@ -28,7 +28,7 @@
                     @endphp
                     <article class="overflow-hidden rounded-3xl border border-sand shadow-soft transition hover:-translate-y-1 {{ $cardColor }}">
                         <div class="grid min-h-full md:grid-cols-[0.9fr_1.1fr]">
-                            <img src="{{ $resource['image'] }}" alt="{{ $resource['title'] }}" class="h-64 w-full object-cover md:h-full" loading="lazy">
+                            <img src="{{ $resource['image'] }}" alt="{{ $resource['title'] }}" class="h-64 w-full object-cover md:h-full" loading="lazy" decoding="async" sizes="(min-width: 768px) 45vw, 100vw">
                             <div class="p-6 md:p-8">
                                 <p class="text-xs font-bold uppercase tracking-[0.14em] {{ $isLight ? 'text-ember' : 'text-white/75' }}">Resources</p>
                                 <h3 class="mt-3 text-2xl leading-tight {{ $isLight ? 'text-pine' : 'text-white' }}">{{ $resource['title'] }}</h3>

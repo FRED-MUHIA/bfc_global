@@ -44,6 +44,9 @@
                         src="{{ $programImage }}"
                         alt="{{ $program['title'] }}"
                         class="mt-8 aspect-[4/3] w-full rounded-2xl object-cover shadow-soft"
+                        loading="lazy"
+                        decoding="async"
+                        sizes="(min-width: 1024px) 35vw, 100vw"
                     >
                 </aside>
 

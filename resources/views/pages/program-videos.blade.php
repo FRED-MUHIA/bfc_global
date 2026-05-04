@@ -23,11 +23,12 @@
                                     src="{{ $video['video_url'] }}"
                                     title="{{ $video['title'] }}"
                                     class="h-full w-full"
+                                    loading="lazy"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                     allowfullscreen
                                 ></iframe>
                             @else
-                                <img src="{{ $video['thumbnail'] ?? '' }}" alt="{{ $video['title'] }}" class="h-full w-full object-cover">
+                                <img src="{{ $video['thumbnail'] ?? '' }}" alt="{{ $video['title'] }}" class="h-full w-full object-cover" loading="lazy" decoding="async" sizes="(min-width: 1024px) 33vw, 100vw">
                             @endif
                         </div>
                         <div class="p-6">

@@ -45,6 +45,8 @@
                         alt="{{ $homeAbout['image_alt'] ?? 'Families and community members gathered in support' }}"
                         class="h-80 w-full object-cover md:h-[28rem]"
                         loading="lazy"
+                        decoding="async"
+                        sizes="(min-width: 1024px) 49vw, 100vw"
                     >
                 </div>
             </div>
@@ -124,7 +126,7 @@
                         <div class="glass-panel flex h-full flex-col justify-between p-6">
                         <p class="text-lg leading-relaxed text-slate/90">"{{ $testimonial['quote'] }}"</p>
                         <button type="button" data-testimonial-open="home-testimonial-{{ $loop->index }}" class="mt-6 flex w-full items-center gap-4 border-t border-sand pt-4 text-left transition hover:text-pine focus:outline-none focus:ring-2 focus:ring-sage/30">
-                            <img src="{{ $testimonial['image'] }}" alt="{{ $testimonial['name'] }}" class="h-14 w-14 shrink-0 rounded-full object-cover ring-2 ring-white shadow" loading="lazy">
+                            <img src="{{ $testimonial['image'] }}" alt="{{ $testimonial['name'] }}" class="h-14 w-14 shrink-0 rounded-full object-cover ring-2 ring-white shadow" loading="lazy" decoding="async" sizes="56px">
                             <div>
                                 <p class="font-semibold text-pine">{{ $testimonial['name'] }}</p>
                                 <p class="text-sm text-slate/70">{{ $testimonial['role'] }}</p>
@@ -153,7 +155,7 @@
             <div class="max-h-[88vh] w-full max-w-2xl overflow-y-auto rounded-3xl bg-white p-6 shadow-2xl md:p-8">
                 <div class="sticky top-0 z-10 -mx-6 -mt-6 flex items-start justify-between gap-4 border-b border-sand bg-white/95 px-6 py-5 backdrop-blur md:-mx-8 md:-mt-8 md:px-8">
                     <div class="flex items-center gap-4">
-                        <img src="{{ $testimonial['image'] }}" alt="{{ $testimonial['name'] }}" class="h-16 w-16 shrink-0 rounded-full object-cover ring-2 ring-sand">
+                        <img src="{{ $testimonial['image'] }}" alt="{{ $testimonial['name'] }}" class="h-16 w-16 shrink-0 rounded-full object-cover ring-2 ring-sand" loading="lazy" decoding="async" sizes="64px">
                         <div>
                             <h3 id="home-testimonial-title-{{ $loop->index }}" class="text-2xl">{{ $testimonial['name'] }}</h3>
                             <p class="text-sm font-semibold uppercase tracking-[0.12em] text-sage">{{ $testimonial['role'] }}</p>
@@ -221,7 +223,7 @@
             <div class="grid gap-6 lg:grid-cols-3">
                 @foreach ($previews as $post)
                     <article class="reveal-item overflow-hidden rounded-3xl border border-sand bg-white shadow-soft transition hover:-translate-y-1" data-reveal style="--reveal-delay: {{ $loop->index * 100 }}ms;">
-                        <img src="{{ $post->image }}" alt="{{ $post->title }}" class="h-52 w-full object-cover" loading="lazy">
+                        <img src="{{ $post->image }}" alt="{{ $post->title }}" class="h-52 w-full object-cover" loading="lazy" decoding="async" sizes="(min-width: 1024px) 33vw, 100vw">
                         <div class="p-6">
                             <p class="text-xs font-bold uppercase tracking-[0.12em] text-ember">{{ $post->category }}</p>
                             <h3 class="mt-2 text-2xl leading-tight">{{ $post->title }}</h3>

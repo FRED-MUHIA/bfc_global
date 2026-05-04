@@ -19,7 +19,7 @@
                     @continue(!($book['is_available'] ?? true))
                     @php($bookSlug = $book['slug'] ?? str($book['title'])->slug())
                     <article class="overflow-hidden border border-sand bg-white shadow-soft transition hover:-translate-y-1">
-                        <img src="{{ $book['cover_image'] }}" alt="{{ $book['title'] }}" class="h-64 w-full object-cover" loading="lazy">
+                        <img src="{{ $book['cover_image'] }}" alt="{{ $book['title'] }}" class="h-64 w-full object-cover" loading="lazy" decoding="async" sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw">
                         <div class="p-6">
                             <p class="text-xs font-bold uppercase tracking-[0.13em] text-ember">{{ $book['category'] ?? 'Book' }}</p>
                             <h2 class="mt-3 text-2xl leading-tight">{{ $book['title'] }}</h2>

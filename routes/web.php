@@ -84,7 +84,10 @@ Route::controller(InquiryController::class)->group(function (): void {
 Route::get('/storage/{path}', function (string $path) {
     abort_unless(Storage::disk('public')->exists($path), 404);
 
-    return Storage::disk('public')->response($path);
+    return Storage::disk('public')
+        ->response($path)
+        ->setMaxAge(31536000)
+        ->setPublic();
 })->where('path', '.*')->name('storage.public');
 
 Route::fallback(function () {

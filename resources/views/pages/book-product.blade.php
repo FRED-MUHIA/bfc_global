@@ -7,7 +7,7 @@
     <section class="py-16 md:py-20">
         <div class="container-base">
             <div class="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
-                <img src="{{ $book['cover_image'] }}" alt="{{ $book['title'] }}" class="w-full border border-sand object-cover shadow-soft">
+                <img src="{{ $book['cover_image'] }}" alt="{{ $book['title'] }}" class="w-full border border-sand object-cover shadow-soft" loading="eager" fetchpriority="high" decoding="async" sizes="(min-width: 1024px) 40vw, 100vw">
 
                 <article class="glass-panel p-6 md:p-8">
                     <p class="text-sm font-bold uppercase tracking-[0.15em] text-ember">{{ $book['category'] ?? 'Book' }}</p>

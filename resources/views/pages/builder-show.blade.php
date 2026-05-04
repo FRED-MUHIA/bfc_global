@@ -8,7 +8,7 @@
 @section('content')
     <section class="relative overflow-hidden bg-pine text-white">
         @if (!empty($hero['image_url']))
-            <img src="{{ $hero['image_url'] }}" alt="" class="absolute inset-0 h-full w-full object-cover opacity-35">
+            <img src="{{ $hero['image_url'] }}" alt="" class="absolute inset-0 h-full w-full object-cover opacity-35" loading="eager" fetchpriority="high" decoding="async" sizes="100vw">
         @endif
         <div class="container-base relative py-20 sm:py-24 lg:py-28">
             @if (!empty($hero['eyebrow']))
@@ -29,7 +29,7 @@
                 @if ($type === 'image')
                     <article class="grid gap-6 md:grid-cols-2 md:items-center">
                         @if (!empty($section['image_url']))
-                            <img src="{{ $section['image_url'] }}" alt="" class="aspect-[4/3] w-full rounded-lg object-cover">
+                            <img src="{{ $section['image_url'] }}" alt="" class="aspect-[4/3] w-full rounded-lg object-cover" loading="lazy" decoding="async" sizes="(min-width: 768px) 50vw, 100vw">
                         @endif
                         <div>
                             @if (!empty($section['title']))

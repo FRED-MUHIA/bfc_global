@@ -20,7 +20,7 @@
         </header>
 
         <div class="container-base mt-10">
-            <img src="{{ $post->image }}" alt="{{ $post->title }}" class="h-72 w-full rounded-3xl object-cover shadow-soft md:h-[28rem]">
+            <img src="{{ $post->image }}" alt="{{ $post->title }}" class="h-72 w-full rounded-3xl object-cover shadow-soft md:h-[28rem]" loading="eager" fetchpriority="high" decoding="async" sizes="100vw">
         </div>
 
         <div class="container-base mt-10 grid gap-8">

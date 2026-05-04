@@ -38,7 +38,7 @@
                         data-gallery-title="{{ $photo['title'] }}"
                         class="group overflow-hidden border border-sand bg-white shadow-soft transition hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-sage/40"
                     >
-                        <img src="{{ $photo['image'] }}" alt="{{ $photo['title'] }}" class="aspect-[4/3] h-full w-full object-cover transition duration-500 group-hover:scale-105" loading="lazy">
+                        <img src="{{ $photo['image'] }}" alt="{{ $photo['title'] }}" class="aspect-[4/3] h-full w-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" decoding="async" sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw">
                     </button>
                 @endforeach
             </div>
@@ -48,7 +48,7 @@
     <div data-gallery-modal class="fixed inset-0 z-[80] hidden items-center justify-center bg-slate/80 p-4" role="dialog" aria-modal="true">
         <div class="relative w-full max-w-5xl">
             <button type="button" data-gallery-close class="absolute right-3 top-3 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white text-2xl text-pine shadow-soft" aria-label="Close image">&times;</button>
-            <img data-gallery-modal-image src="" alt="" class="max-h-[84vh] w-full rounded-2xl object-contain bg-white">
+            <img data-gallery-modal-image src="" alt="" class="max-h-[84vh] w-full rounded-2xl object-contain bg-white" decoding="async" sizes="100vw">
         </div>
     </div>
 

@@ -36,7 +36,7 @@
                         $registrationOpen = $event['registration_open'] ?? true;
                     @endphp
                     <article class="overflow-hidden rounded-3xl border border-sand bg-white shadow-soft transition hover:-translate-y-1">
-                        <img src="{{ $event['image'] }}" alt="{{ $event['title'] }}" class="h-52 w-full object-cover" loading="lazy">
+                        <img src="{{ $event['image'] }}" alt="{{ $event['title'] }}" class="h-52 w-full object-cover" loading="lazy" decoding="async" sizes="(min-width: 1024px) 33vw, 100vw">
                         <div id="event-{{ $eventSlug }}" class="p-6">
                             <div class="flex flex-wrap items-center justify-between gap-2">
                                 <p class="text-xs font-bold uppercase tracking-[0.12em] text-ember">{{ $event['category'] }}</p>

@@ -24,6 +24,8 @@
                             alt="{{ $site['organization']['founders_message']['signature'] }}"
                             class="relative h-full w-full rounded-full object-cover shadow-soft"
                             loading="lazy"
+                            decoding="async"
+                            sizes="256px"
                         >
                     </div>
                     <div class="text-pine">

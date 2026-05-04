@@ -24,7 +24,7 @@
     <div class="container-base flex h-20 items-center justify-between gap-6">
         <a href="{{ route('home') }}" class="group flex items-center gap-3">
             @if (!empty($branding['logo_url']))
-                <img src="{{ $branding['logo_url'] }}" alt="{{ $brandName }}" class="max-h-14 w-auto max-w-[210px] object-contain">
+                <img src="{{ $branding['logo_url'] }}" alt="{{ $brandName }}" class="max-h-14 w-auto max-w-[210px] object-contain" loading="eager" fetchpriority="high" decoding="async">
             @else
                 <span>
                     <span class="block font-heading text-lg font-semibold text-pine transition group-hover:text-ember md:text-xl">

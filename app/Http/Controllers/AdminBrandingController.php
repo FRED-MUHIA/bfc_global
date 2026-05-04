@@ -51,7 +51,7 @@ class AdminBrandingController extends Controller
         }
 
         if ($request->hasFile('branding.favicon_upload')) {
-            $branding['favicon_url'] = PublicUpload::store($request->file('branding.favicon_upload'), 'branding')['url'];
+            $branding['favicon_url'] = PublicUpload::store($request->file('branding.favicon_upload'), 'branding', false)['url'];
         }
 
         unset($branding['logo_upload'], $branding['favicon_upload']);

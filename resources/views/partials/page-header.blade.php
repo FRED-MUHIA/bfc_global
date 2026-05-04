@@ -5,7 +5,7 @@
 @endphp
 
 <header class="relative overflow-hidden bg-pine py-20 text-white md:py-24">
-    <img src="{{ $image }}" alt="" class="absolute inset-0 h-full w-full object-cover" loading="eager">
+    <img src="{{ $image }}" alt="" class="absolute inset-0 h-full w-full object-cover" loading="eager" fetchpriority="high" decoding="async" sizes="100vw">
     <div class="absolute inset-0 bg-gradient-to-r from-pine/95 via-pine/80 to-pine/35"></div>
     <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/30"></div>
     <div class="container-base relative z-10">
