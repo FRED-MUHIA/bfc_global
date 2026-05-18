@@ -15,6 +15,7 @@ class PageController extends Controller
     {
         try {
             $blogPreviews = BlogPost::query()
+                ->where('category', '!=', 'Resources')
                 ->orderByDesc('published_at')
                 ->take(3)
                 ->get();
@@ -29,6 +30,7 @@ class PageController extends Controller
         } catch (QueryException) {
             $fallbackPosts = collect($this->siteData('blog_posts', []));
             $blogPreviews = $fallbackPosts
+                ->reject(fn (array $post): bool => strcasecmp((string) ($post['category'] ?? ''), 'Resources') === 0)
                 ->take(3)
                 ->map(fn (array $post) => (object) $post);
             $featuredResourcePosts = $fallbackPosts

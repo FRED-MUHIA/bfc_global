@@ -129,7 +129,7 @@
             <div class="reveal-item mb-10 max-w-3xl" data-reveal>
                 <p class="text-sm font-bold uppercase tracking-[0.15em] text-ember">{{ data_get($homeSections, 'testimonials.eyebrow', 'Stories of Hope') }}</p>
                 <h2 class="mt-3 text-3xl leading-tight md:text-4xl">{{ data_get($homeSections, 'testimonials.title', 'Families sharing real transformation') }}</h2>
-                <p class="mt-4 text-base text-slate/80 md:text-lg">
+                <p class="mt-4 text-base italic text-slate/80 md:text-lg">
                     {{ data_get($homeSections, 'testimonials.description', 'Every testimony reflects resilience, renewed trust, and a stronger sense of belonging.') }}
                 </p>
             </div>
