@@ -9,6 +9,7 @@
             ? $blogPreviews
             : collect($site['blog_posts'] ?? [])->take(3)->map(fn ($post) => (object) $post);
         $homeAbout = $site['home_about'] ?? [];
+        $homeSections = $site['home_sections'] ?? [];
     @endphp
 
     <div class="pt-2 md:pt-3">
@@ -26,7 +27,7 @@
                     </p>
                     <blockquote class="reveal-item mt-6 rounded-3xl border-l-4 border-ember bg-cream/80 p-5 shadow-soft" data-reveal style="--reveal-delay: 120ms;">
                         <p class="text-sm font-bold uppercase tracking-[0.15em] text-ember">{{ $homeAbout['scripture_reference'] ?? 'Nehemiah 2:18' }}</p>
-                        <p class="mt-3 text-base leading-8 text-slate/85">
+                        <p class="mt-3 text-base italic leading-8 text-slate/85">
                             {{ $homeAbout['scripture_text'] ?? '' }}
                         </p>
                     </blockquote>
@@ -56,20 +57,26 @@
     <section class="py-16 md:py-20">
         <div class="container-base">
             <div class="reveal-item mb-10 max-w-3xl" data-reveal>
-                <p class="text-sm font-bold uppercase tracking-[0.15em] text-ember">Featured Resources</p>
-                <h2 class="mt-3 text-3xl leading-tight md:text-4xl">Practical tools for everyday family life</h2>
+                <p class="text-sm font-bold uppercase tracking-[0.15em] text-ember">{{ data_get($homeSections, 'featured_resources.eyebrow', 'Featured Resources') }}</p>
+                <h2 class="mt-3 text-3xl leading-tight md:text-4xl">{{ data_get($homeSections, 'featured_resources.title', 'Practical tools for everyday family life') }}</h2>
                 <p class="mt-4 text-base text-slate/80 md:text-lg">
-                    Explore our most requested guides designed for busy parents, couples, and caregivers.
+                    {{ data_get($homeSections, 'featured_resources.description', 'Explore our most requested guides designed for busy parents, couples, and caregivers.') }}
                 </p>
             </div>
             <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 @foreach (($site['featured_resources'] ?? []) as $resource)
-                    <article class="reveal-item glass-panel h-full p-6 transition hover:-translate-y-1 hover:shadow-soft" data-reveal style="--reveal-delay: {{ $loop->index * 100 }}ms;">
+                    @php
+                        $candidateBlogSlug = $resource['blog_slug'] ?? str($resource['title'] ?? '')->slug()->toString();
+                        $resourceUrl = in_array($candidateBlogSlug, $blogSlugs ?? [], true)
+                            ? route('blog.show', $candidateBlogSlug)
+                            : route('blog.index');
+                    @endphp
+                    <a href="{{ $resourceUrl }}" class="reveal-item glass-panel block h-full p-6 transition hover:-translate-y-1 hover:shadow-soft focus:outline-none focus:ring-2 focus:ring-sage/30" data-reveal style="--reveal-delay: {{ $loop->index * 100 }}ms;">
                         <p class="text-xs font-bold uppercase tracking-[0.13em] text-sage">{{ $resource['category'] }}</p>
                         <h3 class="mt-3 text-2xl leading-tight">{{ $resource['title'] }}</h3>
                         <p class="mt-4 text-sm text-slate/80">{{ $resource['description'] }}</p>
                         <p class="mt-5 text-xs font-semibold uppercase tracking-[0.12em] text-ember">{{ $resource['read_time'] }}</p>
-                    </article>
+                    </a>
                 @endforeach
             </div>
         </div>
@@ -78,10 +85,10 @@
     <section class="bg-white/70 py-16 md:py-20">
         <div class="container-base">
             <div class="reveal-item mb-10 max-w-3xl" data-reveal>
-                <p class="text-sm font-bold uppercase tracking-[0.15em] text-ember">Our Impact</p>
-                <h2 class="mt-3 text-3xl leading-tight md:text-4xl">Serving families with measurable care</h2>
+                <p class="text-sm font-bold uppercase tracking-[0.15em] text-ember">{{ data_get($homeSections, 'impact.eyebrow', 'Our Impact') }}</p>
+                <h2 class="mt-3 text-3xl leading-tight md:text-4xl">{{ data_get($homeSections, 'impact.title', 'Serving families with measurable care') }}</h2>
                 <p class="mt-4 text-base text-slate/80 md:text-lg">
-                    By combining compassionate support with practical programs, we are seeing meaningful outcomes across communities.
+                    {{ data_get($homeSections, 'impact.description', 'By combining compassionate support with practical programs, we are seeing meaningful outcomes across communities.') }}
                 </p>
             </div>
             <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -112,27 +119,31 @@
     <section class="py-16 md:py-20">
         <div class="container-base">
             <div class="reveal-item mb-10 max-w-3xl" data-reveal>
-                <p class="text-sm font-bold uppercase tracking-[0.15em] text-ember">Stories of Hope</p>
-                <h2 class="mt-3 text-3xl leading-tight md:text-4xl">Families sharing real transformation</h2>
+                <p class="text-sm font-bold uppercase tracking-[0.15em] text-ember">{{ data_get($homeSections, 'testimonials.eyebrow', 'Stories of Hope') }}</p>
+                <h2 class="mt-3 text-3xl leading-tight md:text-4xl">{{ data_get($homeSections, 'testimonials.title', 'Families sharing real transformation') }}</h2>
                 <p class="mt-4 text-base text-slate/80 md:text-lg">
-                    Every testimony reflects resilience, renewed trust, and a stronger sense of belonging.
+                    {{ data_get($homeSections, 'testimonials.description', 'Every testimony reflects resilience, renewed trust, and a stronger sense of belonging.') }}
                 </p>
             </div>
             <div class="relative" data-testimonial-slider>
                 <div class="overflow-hidden">
                     <div class="flex transition-transform duration-500 ease-out" data-testimonial-track>
                 @foreach (($site['testimonials'] ?? []) as $testimonial)
+                    @php
+                        $quoteSentences = preg_split('/(?<=[.!?])\s+/', trim($testimonial['quote'] ?? ''), -1, PREG_SPLIT_NO_EMPTY);
+                        $quotePreview = implode(' ', array_slice($quoteSentences ?: [$testimonial['quote'] ?? ''], 0, 2));
+                    @endphp
                     <article class="reveal-item min-w-full px-0 md:min-w-[50%] md:px-3 lg:min-w-[33.333%]" data-reveal style="--reveal-delay: {{ $loop->index * 100 }}ms;">
-                        <div class="glass-panel flex h-full flex-col justify-between p-6">
-                        <p class="text-lg leading-relaxed text-slate/90">"{{ $testimonial['quote'] }}"</p>
-                        <button type="button" data-testimonial-open="home-testimonial-{{ $loop->index }}" class="mt-6 flex w-full items-center gap-4 border-t border-sand pt-4 text-left transition hover:text-pine focus:outline-none focus:ring-2 focus:ring-sage/30">
-                            <img src="{{ $testimonial['image'] }}" alt="{{ $testimonial['name'] }}" class="h-14 w-14 shrink-0 rounded-full object-cover ring-2 ring-white shadow" loading="lazy" decoding="async" sizes="56px">
-                            <div>
-                                <p class="font-semibold text-pine">{{ $testimonial['name'] }}</p>
-                                <p class="text-sm text-slate/70">{{ $testimonial['role'] }}</p>
+                        <button type="button" data-testimonial-open="home-testimonial-{{ $loop->index }}" class="glass-panel flex h-full w-full flex-col justify-between p-6 text-left transition hover:-translate-y-1 hover:shadow-soft focus:outline-none focus:ring-2 focus:ring-sage/30">
+                            <p class="text-lg leading-relaxed text-slate/90">"{{ $quotePreview }}"</p>
+                            <div class="mt-6 flex w-full items-center gap-4 border-t border-sand pt-4">
+                                <img src="{{ $testimonial['image'] }}" alt="{{ $testimonial['name'] }}" class="h-14 w-14 shrink-0 rounded-full object-cover ring-2 ring-white shadow" loading="lazy" decoding="async" sizes="56px">
+                                <div>
+                                    <p class="font-semibold text-pine">{{ $testimonial['name'] }}</p>
+                                    <p class="text-sm text-slate/70">{{ $testimonial['role'] }}</p>
+                                </div>
                             </div>
                         </button>
-                        </div>
                     </article>
 
                 @endforeach
@@ -214,10 +225,10 @@
     <section class="bg-white/60 py-16 md:py-20">
         <div class="container-base">
             <div class="reveal-item mb-10 max-w-3xl" data-reveal>
-                <p class="text-sm font-bold uppercase tracking-[0.15em] text-ember">Latest from Our Blog</p>
-                <h2 class="mt-3 text-3xl leading-tight md:text-4xl">Encouragement and insight for your next step</h2>
+                <p class="text-sm font-bold uppercase tracking-[0.15em] text-ember">{{ data_get($homeSections, 'blog.eyebrow', 'Latest from Our Blog') }}</p>
+                <h2 class="mt-3 text-3xl leading-tight md:text-4xl">{{ data_get($homeSections, 'blog.title', 'Encouragement and insight for your next step') }}</h2>
                 <p class="mt-4 text-base text-slate/80 md:text-lg">
-                    Read articles from our team on parenting, marriage, youth development, and community wellbeing.
+                    {{ data_get($homeSections, 'blog.description', 'Read articles from our team on parenting, marriage, youth development, and community wellbeing.') }}
                 </p>
             </div>
             <div class="grid gap-6 lg:grid-cols-3">
@@ -247,10 +258,10 @@
     <section class="py-16 md:py-20">
         <div class="container-base">
             <div class="reveal-item mb-10 max-w-3xl" data-reveal>
-                <p class="text-sm font-bold uppercase tracking-[0.15em] text-ember">Stay Connected</p>
-                <h2 class="mt-3 text-3xl leading-tight md:text-4xl">Monthly support for your family journey</h2>
+                <p class="text-sm font-bold uppercase tracking-[0.15em] text-ember">{{ data_get($homeSections, 'newsletter.eyebrow', 'Stay Connected') }}</p>
+                <h2 class="mt-3 text-3xl leading-tight md:text-4xl">{{ data_get($homeSections, 'newsletter.title', 'Monthly support for your family journey') }}</h2>
                 <p class="mt-4 text-base text-slate/80 md:text-lg">
-                    Receive practical encouragement, upcoming events, and free resources.
+                    {{ data_get($homeSections, 'newsletter.description', 'Receive practical encouragement, upcoming events, and free resources.') }}
                 </p>
             </div>
             <div class="reveal-item" data-reveal style="--reveal-delay: 120ms;">

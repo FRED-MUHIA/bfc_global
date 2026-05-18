@@ -182,7 +182,7 @@ class AdminPageController extends Controller
     private function pageDefinitions(): array
     {
         return [
-            ['slug' => 'home', 'label' => 'Home', 'path' => '/', 'source_keys' => ['home_hero_slides', 'home_about', 'organization', 'featured_resources', 'impact_stats', 'testimonials', 'blog_posts']],
+            ['slug' => 'home', 'label' => 'Home', 'path' => '/', 'source_keys' => ['home_hero_slides', 'home_about', 'home_sections', 'newsletter', 'organization', 'featured_resources', 'impact_stats', 'testimonials', 'blog_posts']],
             ['slug' => 'about', 'label' => 'About', 'path' => '/about', 'source_keys' => ['organization']],
             ['slug' => 'ministry-programs', 'label' => 'Ministry Programs', 'path' => '/ministry-programs', 'source_keys' => ['ministry_programs']],
             ['slug' => 'events', 'label' => 'Events', 'path' => '/events', 'source_keys' => ['events', 'event_registration_questions']],

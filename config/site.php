@@ -131,6 +131,39 @@ return [
         'secondary_label' => 'Contact Us',
         'secondary_url' => '/contact',
     ],
+    'home_sections' => [
+        'featured_resources' => [
+            'eyebrow' => 'Featured Resources',
+            'title' => 'Practical tools for everyday family life',
+            'description' => 'Explore our most requested guides designed for busy parents, couples, and caregivers.',
+        ],
+        'impact' => [
+            'eyebrow' => 'Our Impact',
+            'title' => 'Serving families with measurable care',
+            'description' => 'By combining compassionate support with practical programs, we are seeing meaningful outcomes across communities.',
+        ],
+        'testimonials' => [
+            'eyebrow' => 'Stories of Hope',
+            'title' => 'Families sharing real transformation',
+            'description' => 'Every testimony reflects resilience, renewed trust, and a stronger sense of belonging.',
+        ],
+        'blog' => [
+            'eyebrow' => 'Latest from Our Blog',
+            'title' => 'Encouragement and insight for your next step',
+            'description' => 'Read articles from our team on parenting, marriage, youth development, and community wellbeing.',
+        ],
+        'newsletter' => [
+            'eyebrow' => 'Stay Connected',
+            'title' => 'Monthly support for your family journey',
+            'description' => 'Receive practical encouragement, upcoming events, and free resources.',
+        ],
+    ],
+    'newsletter' => [
+        'title' => 'Stay Encouraged Every Month',
+        'description' => 'Get practical family tips, upcoming workshops, and community stories delivered to your inbox.',
+        'placeholder' => 'Enter your email address',
+        'button_label' => 'Subscribe',
+    ],
     'home_hero_slides' => [
         [
             'id' => 'marriage-hope',
@@ -166,18 +199,21 @@ return [
             'description' => 'Five simple routines that lower stress and improve school-day transitions for children and caregivers.',
             'category' => 'Parenting Basics',
             'read_time' => '7 min read',
+            'blog_slug' => '',
         ],
         [
             'title' => 'Marriage Check-In Guide',
             'description' => 'A weekly conversation framework for couples to reconnect emotionally, spiritually, and practically.',
             'category' => 'Marriage Support',
             'read_time' => '9 min read',
+            'blog_slug' => '',
         ],
         [
             'title' => 'Teen Purpose Planner',
             'description' => 'A printable reflection and goal worksheet designed for youth identity, confidence, and healthy decision making.',
             'category' => 'Youth Development',
             'read_time' => '6 min read',
+            'blog_slug' => '',
         ],
     ],
     'impact_stats' => [

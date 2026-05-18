@@ -18,13 +18,19 @@ class PageController extends Controller
                 ->orderByDesc('published_at')
                 ->take(3)
                 ->get();
+            $blogSlugs = BlogPost::query()
+                ->pluck('slug')
+                ->all();
         } catch (QueryException) {
             $blogPreviews = collect($this->siteData('blog_posts', []))
                 ->take(3)
                 ->map(fn (array $post) => (object) $post);
+            $blogSlugs = collect($this->siteData('blog_posts', []))
+                ->pluck('slug')
+                ->all();
         }
 
-        return $this->renderPage('home', 'pages.home', compact('blogPreviews'));
+        return $this->renderPage('home', 'pages.home', compact('blogPreviews', 'blogSlugs'));
     }
 
     public function about(): View
