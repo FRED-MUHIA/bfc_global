@@ -66,8 +66,7 @@
             <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 @forelse (($featuredResourcePosts ?? collect()) as $post)
                     <a href="{{ route('blog.show', $post->slug) }}" class="reveal-item glass-panel block h-full p-6 transition hover:-translate-y-1 hover:shadow-soft focus:outline-none focus:ring-2 focus:ring-sage/30" data-reveal style="--reveal-delay: {{ $loop->index * 100 }}ms;">
-                        <p class="text-xs font-bold uppercase tracking-[0.13em] text-sage">{{ $post->category }}</p>
-                        <h3 class="mt-3 text-2xl leading-tight">{{ $post->title }}</h3>
+                        <h3 class="text-2xl leading-tight">{{ $post->title }}</h3>
                         <p class="mt-4 text-sm text-slate/80">{{ $post->excerpt }}</p>
                         <p class="mt-5 text-xs font-semibold uppercase tracking-[0.12em] text-ember">{{ $post->read_time }}</p>
                     </a>
@@ -143,16 +142,16 @@
                         $quotePreview = implode(' ', array_slice($quoteSentences ?: [$testimonial['quote'] ?? ''], 0, 2));
                     @endphp
                     <article class="reveal-item min-w-full px-0 md:min-w-[50%] md:px-3 lg:min-w-[33.333%]" data-reveal style="--reveal-delay: {{ $loop->index * 100 }}ms;">
-                        <button type="button" data-testimonial-open="home-testimonial-{{ $loop->index }}" class="glass-panel flex h-full w-full flex-col justify-between p-6 text-left transition hover:-translate-y-1 hover:shadow-soft focus:outline-none focus:ring-2 focus:ring-sage/30">
-                            <p class="text-lg leading-relaxed text-slate/90">"{{ $quotePreview }}"</p>
-                            <span class="mt-4 inline-flex text-sm font-bold uppercase tracking-[0.12em] text-ember">Read more</span>
-                            <div class="mt-6 flex w-full items-center gap-4 border-t border-sand pt-4">
+                        <button type="button" data-testimonial-open="home-testimonial-{{ $loop->index }}" class="group glass-panel flex h-full w-full flex-col p-6 text-left transition hover:-translate-y-1 hover:shadow-soft focus:outline-none focus:ring-2 focus:ring-sage/30">
+                            <div class="flex w-full items-center gap-4 border-b border-sand pb-4">
                                 <img src="{{ $testimonial['image'] }}" alt="{{ $testimonial['name'] }}" class="h-14 w-14 shrink-0 rounded-full object-cover ring-2 ring-white shadow" loading="lazy" decoding="async" sizes="56px">
                                 <div>
                                     <p class="font-semibold text-pine">{{ $testimonial['name'] }}</p>
                                     <p class="text-sm text-slate/70">{{ $testimonial['role'] }}</p>
                                 </div>
                             </div>
+                            <p class="mt-5 text-lg leading-relaxed text-slate/90">"{{ $quotePreview }}"</p>
+                            <span class="mt-3 inline-flex text-sm font-bold uppercase tracking-[0.12em] text-ember underline-offset-4 transition group-hover:text-pine group-hover:underline group-focus:underline">Read more</span>
                         </button>
                     </article>
 
