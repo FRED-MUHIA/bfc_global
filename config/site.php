@@ -216,6 +216,9 @@ return [
             'blog_slug' => '',
         ],
     ],
+    'blog_categories' => [
+        'Resources',
+    ],
     'impact_stats' => [
         ['value' => '1,850+', 'label' => 'Families Served Last Year'],
         ['value' => '320', 'label' => 'Youth in Weekly Mentoring'],

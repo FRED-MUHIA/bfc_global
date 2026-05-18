@@ -18,19 +18,29 @@ class PageController extends Controller
                 ->orderByDesc('published_at')
                 ->take(3)
                 ->get();
+            $featuredResourcePosts = BlogPost::query()
+                ->where('category', 'Resources')
+                ->orderByDesc('published_at')
+                ->take(3)
+                ->get();
             $blogSlugs = BlogPost::query()
                 ->pluck('slug')
                 ->all();
         } catch (QueryException) {
-            $blogPreviews = collect($this->siteData('blog_posts', []))
+            $fallbackPosts = collect($this->siteData('blog_posts', []));
+            $blogPreviews = $fallbackPosts
                 ->take(3)
                 ->map(fn (array $post) => (object) $post);
-            $blogSlugs = collect($this->siteData('blog_posts', []))
+            $featuredResourcePosts = $fallbackPosts
+                ->filter(fn (array $post): bool => strcasecmp((string) ($post['category'] ?? ''), 'Resources') === 0)
+                ->take(3)
+                ->map(fn (array $post) => (object) $post);
+            $blogSlugs = $fallbackPosts
                 ->pluck('slug')
                 ->all();
         }
 
-        return $this->renderPage('home', 'pages.home', compact('blogPreviews', 'blogSlugs'));
+        return $this->renderPage('home', 'pages.home', compact('blogPreviews', 'featuredResourcePosts', 'blogSlugs'));
     }
 
     public function about(): View

@@ -64,7 +64,15 @@
                 </p>
             </div>
             <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                @foreach (($site['featured_resources'] ?? []) as $resource)
+                @forelse (($featuredResourcePosts ?? collect()) as $post)
+                    <a href="{{ route('blog.show', $post->slug) }}" class="reveal-item glass-panel block h-full p-6 transition hover:-translate-y-1 hover:shadow-soft focus:outline-none focus:ring-2 focus:ring-sage/30" data-reveal style="--reveal-delay: {{ $loop->index * 100 }}ms;">
+                        <p class="text-xs font-bold uppercase tracking-[0.13em] text-sage">{{ $post->category }}</p>
+                        <h3 class="mt-3 text-2xl leading-tight">{{ $post->title }}</h3>
+                        <p class="mt-4 text-sm text-slate/80">{{ $post->excerpt }}</p>
+                        <p class="mt-5 text-xs font-semibold uppercase tracking-[0.12em] text-ember">{{ $post->read_time }}</p>
+                    </a>
+                @empty
+                    @foreach (($site['featured_resources'] ?? []) as $resource)
                     @php
                         $candidateBlogSlug = $resource['blog_slug'] ?? str($resource['title'] ?? '')->slug()->toString();
                         $resourceUrl = in_array($candidateBlogSlug, $blogSlugs ?? [], true)
@@ -77,7 +85,8 @@
                         <p class="mt-4 text-sm text-slate/80">{{ $resource['description'] }}</p>
                         <p class="mt-5 text-xs font-semibold uppercase tracking-[0.12em] text-ember">{{ $resource['read_time'] }}</p>
                     </a>
-                @endforeach
+                    @endforeach
+                @endforelse
             </div>
         </div>
     </section>

@@ -32,6 +32,8 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function (): 
     Route::get('/media', [AdminMediaController::class, 'index'])->name('media.index');
     Route::post('/media', [AdminMediaController::class, 'store'])->name('media.store');
     Route::delete('/media/{media}', [AdminMediaController::class, 'destroy'])->name('media.destroy');
+    Route::post('/blog/categories', [AdminBlogController::class, 'storeCategory'])->name('blog.categories.store');
+    Route::delete('/blog/categories/{category}', [AdminBlogController::class, 'destroyCategory'])->name('blog.categories.destroy');
     Route::resource('blog', AdminBlogController::class)->except(['show']);
     Route::resource('books', AdminBookController::class)->except(['show']);
     Route::patch('/events/{event}/toggle-registration', [AdminEventController::class, 'toggleRegistration'])->name('events.toggle-registration');

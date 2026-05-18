@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BlogPost;
+use App\Models\SiteSetting;
 use App\Support\PublicUpload;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -15,6 +16,11 @@ class AdminBlogController extends Controller
     {
         return view('admin.blog.index', [
             'posts' => BlogPost::query()->orderByDesc('published_at')->paginate(20),
+            'categories' => $this->categories(),
+            'categoryPostCounts' => BlogPost::query()
+                ->pluck('category')
+                ->countBy()
+                ->all(),
         ]);
     }
 
@@ -72,6 +78,50 @@ class AdminBlogController extends Controller
             ->with('status', 'Blog post deleted.');
     }
 
+    public function storeCategory(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'category' => ['required', 'string', 'max:120'],
+        ]);
+
+        $category = trim($validated['category']);
+        $categories = collect($this->categories())
+            ->push($category)
+            ->filter()
+            ->unique()
+            ->sort()
+            ->values()
+            ->all();
+
+        $this->saveCategories($categories);
+
+        return redirect()
+            ->route('admin.blog.index')
+            ->with('status', 'Blog category added.');
+    }
+
+    public function destroyCategory(string $category): RedirectResponse
+    {
+        $category = urldecode($category);
+
+        if (BlogPost::query()->where('category', $category)->exists()) {
+            return redirect()
+                ->route('admin.blog.index')
+                ->withErrors(['category' => 'This category is used by one or more blog posts. Update those posts before removing it.']);
+        }
+
+        $categories = collect($this->categories())
+            ->reject(fn (string $existing): bool => $existing === $category)
+            ->values()
+            ->all();
+
+        $this->saveCategories($categories);
+
+        return redirect()
+            ->route('admin.blog.index')
+            ->with('status', 'Blog category removed.');
+    }
+
     private function validatedData(Request $request, ?BlogPost $post = null): array
     {
         $validated = $request->validate([
@@ -109,11 +159,14 @@ class AdminBlogController extends Controller
 
         $publishedAt = date_create($validated['published_at']);
 
+        $category = trim($validated['new_category'] ?? '') ?: trim($validated['category'] ?? '');
+        $this->rememberCategory($category);
+
         return [
             'title' => $validated['title'],
             'slug' => $slug,
             'excerpt' => $validated['excerpt'],
-            'category' => trim($validated['new_category'] ?? '') ?: trim($validated['category'] ?? ''),
+            'category' => $category,
             'image' => $image,
             'author' => $validated['author'],
             'published_at' => $validated['published_at'],
@@ -136,8 +189,7 @@ class AdminBlogController extends Controller
 
     private function categories(?string $currentCategory = null): array
     {
-        return collect(config('site.blog_posts', []))
-            ->pluck('category')
+        return collect($this->savedCategories())
             ->merge(BlogPost::query()->distinct()->pluck('category'))
             ->when($currentCategory, fn ($categories) => $categories->push($currentCategory))
             ->filter()
@@ -146,5 +198,49 @@ class AdminBlogController extends Controller
             ->sort()
             ->values()
             ->all();
+    }
+
+    private function savedCategories(): array
+    {
+        $categories = SiteSetting::query()
+            ->where('key', 'blog_categories')
+            ->value('value');
+
+        if (is_array($categories)) {
+            return $categories;
+        }
+
+        return collect(config('site.blog_categories', []))
+            ->merge(collect(config('site.blog_posts', []))->pluck('category'))
+            ->filter()
+            ->unique()
+            ->sort()
+            ->values()
+            ->all();
+    }
+
+    private function rememberCategory(string $category): void
+    {
+        if ($category === '') {
+            return;
+        }
+
+        $categories = collect($this->categories())
+            ->push($category)
+            ->filter()
+            ->unique()
+            ->sort()
+            ->values()
+            ->all();
+
+        $this->saveCategories($categories);
+    }
+
+    private function saveCategories(array $categories): void
+    {
+        SiteSetting::query()->updateOrCreate(
+            ['key' => 'blog_categories'],
+            ['value' => array_values($categories)],
+        );
     }
 }

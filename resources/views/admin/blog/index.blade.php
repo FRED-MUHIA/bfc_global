@@ -10,6 +10,46 @@
         <a href="{{ route('admin.blog.create') }}" class="rounded-full bg-pine px-5 py-3 text-sm font-bold text-white hover:bg-sage">Add Blog Post</a>
     </div>
 
+    @if ($errors->any())
+        <div class="mb-6 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
+            {{ $errors->first() }}
+        </div>
+    @endif
+
+    <section class="mb-6 rounded-lg border border-sand bg-white p-5">
+        <div class="flex flex-wrap items-start justify-between gap-4">
+            <div>
+                <h2 class="text-2xl">Blog Categories</h2>
+                <p class="mt-1 text-sm text-slate/70">Add categories for blog posts, or remove unused categories from the dropdown.</p>
+            </div>
+            <form method="POST" action="{{ route('admin.blog.categories.store') }}" class="flex flex-wrap gap-2">
+                @csrf
+                <input name="category" class="field-input min-w-64" placeholder="New category" required>
+                <button type="submit" class="rounded-full bg-pine px-5 py-3 text-sm font-bold text-white hover:bg-sage">Add Category</button>
+            </form>
+        </div>
+
+        <div class="mt-5 flex flex-wrap gap-2">
+            @forelse ($categories as $category)
+                @php($postCount = $categoryPostCounts[$category] ?? 0)
+                <div class="inline-flex items-center gap-2 rounded-full border border-sand bg-cream px-3 py-2 text-sm font-bold text-pine">
+                    <span>{{ $category }}</span>
+                    @if ($postCount > 0)
+                        <span class="text-xs font-semibold text-slate/60">{{ $postCount }} post{{ $postCount === 1 ? '' : 's' }}</span>
+                    @else
+                        <form method="POST" action="{{ route('admin.blog.categories.destroy', $category) }}" onsubmit="return confirm('Remove this blog category?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="text-lg leading-none text-red-700 hover:text-red-900" aria-label="Remove {{ $category }}">&times;</button>
+                        </form>
+                    @endif
+                </div>
+            @empty
+                <p class="text-sm text-slate/70">No categories yet.</p>
+            @endforelse
+        </div>
+    </section>
+
     <div class="overflow-hidden rounded-lg border border-sand bg-white">
         <div class="divide-y divide-sand">
             @forelse ($posts as $post)
