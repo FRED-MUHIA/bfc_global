@@ -29,7 +29,17 @@
                 </label>
                 <label class="grid gap-2">
                     <span class="text-sm font-bold text-pine">Category</span>
-                    <input name="category" value="{{ old('category', $post->category) }}" class="field-input" required>
+                    <select name="category" class="field-input">
+                        <option value="">Select a category</option>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category }}" @selected(old('category', $post->category) === $category)>{{ $category }}</option>
+                        @endforeach
+                    </select>
+                </label>
+                <label class="grid gap-2">
+                    <span class="text-sm font-bold text-pine">Add New Category</span>
+                    <input name="new_category" value="{{ old('new_category') }}" class="field-input" placeholder="Type a new category">
+                    <span class="text-xs text-slate/60">Use this to create a category while saving this post.</span>
                 </label>
                 <label class="grid gap-2 md:col-span-2">
                     <span class="text-sm font-bold text-pine">Excerpt</span>

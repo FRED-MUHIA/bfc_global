@@ -32,7 +32,7 @@ class AdminBrandingController extends Controller
             'branding.join_url' => ['required', 'string', 'max:300'],
             'branding.donate_label' => ['required', 'string', 'max:40'],
             'branding.donate_url' => ['required', 'string', 'max:300'],
-            'branding.logo_upload' => ['nullable', 'image', 'max:5120'],
+            'branding.logo_upload' => ['nullable', 'image', 'max:20480'],
             'branding.favicon_upload' => ['nullable', 'file', 'mimes:ico,png,jpg,jpeg,svg,webp', 'max:1024'],
             'whatsapp.enabled' => ['nullable', 'boolean'],
             'whatsapp.phone' => ['required', 'string', 'max:40'],

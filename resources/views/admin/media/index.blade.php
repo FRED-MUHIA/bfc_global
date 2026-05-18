@@ -27,7 +27,7 @@
             </label>
             <button type="submit" class="rounded-full bg-pine px-6 py-3 text-sm font-bold text-white hover:bg-sage">Upload</button>
         </div>
-        <p class="mt-3 text-sm text-slate/65">Maximum file size: 5 MB.</p>
+        <p class="mt-3 text-sm text-slate/65">Maximum file size: 20 MB.</p>
     </form>
 
     <section class="mt-8">

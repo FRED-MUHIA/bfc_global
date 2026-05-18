@@ -142,7 +142,7 @@ class AdminEventController extends Controller
             'category' => ['required', 'string', 'max:120'],
             'description' => ['required', 'string', 'max:1000'],
             'image' => ['nullable', 'string', 'max:800'],
-            'image_upload' => ['nullable', 'image', 'max:5120'],
+            'image_upload' => ['nullable', 'image', 'max:20480'],
             'registration_open' => ['nullable', 'boolean'],
         ]);
 

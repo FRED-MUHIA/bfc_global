@@ -19,7 +19,7 @@
                     <div class="absolute inset-0 flex items-center">
                         <div class="w-full px-5 py-8 md:max-w-2xl md:px-10 lg:px-16 xl:px-24">
                             <p class="text-sm font-bold uppercase tracking-[0.16em] text-ember">{{ $slide['eyebrow'] }}</p>
-                            <h1 class="mt-3 text-4xl leading-tight text-white md:text-5xl">{{ $slide['title'] }}</h1>
+                            <h1 class="mt-3 text-3xl leading-tight text-white md:text-4xl">{{ $slide['title'] }}</h1>
                             <p class="mt-4 text-base text-white/85 md:text-lg">{{ $slide['description'] }}</p>
                             <div class="mt-7 flex flex-wrap gap-3">
                                 <a href="{{ url($slide['primary_cta']['to']) }}" class="inline-flex items-center justify-center rounded-full bg-ember px-6 py-3 text-base font-semibold tracking-wide text-white transition hover:bg-ember/90">

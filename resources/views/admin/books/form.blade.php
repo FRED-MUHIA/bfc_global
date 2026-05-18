@@ -88,7 +88,7 @@
                     <span class="text-sm font-bold text-pine">Cover Image URL or Path</span>
                     <input name="cover_image" value="{{ old('cover_image', $book['cover_image']) }}" class="field-input">
                     <input type="file" name="cover_upload" accept="image/*" class="field-input bg-white">
-                    <span class="text-xs font-semibold text-slate/60">Maximum upload size: 5 MB.</span>
+                    <span class="text-xs font-semibold text-slate/60">Maximum upload size: 20 MB.</span>
                 </label>
                 @if (!empty($book['cover_image']))
                     <img src="{{ $book['cover_image'] }}" alt="{{ $book['title'] }}" class="h-32 w-24 object-cover">

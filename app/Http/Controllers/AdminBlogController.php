@@ -30,6 +30,7 @@ class AdminBlogController extends Controller
                 ],
             ]),
             'mode' => 'create',
+            'categories' => $this->categories(),
         ]);
     }
 
@@ -49,6 +50,7 @@ class AdminBlogController extends Controller
         return view('admin.blog.form', [
             'post' => $blog,
             'mode' => 'edit',
+            'categories' => $this->categories($blog->category),
         ]);
     }
 
@@ -76,9 +78,10 @@ class AdminBlogController extends Controller
             'title' => ['required', 'string', 'max:180'],
             'slug' => ['nullable', 'string', 'max:180'],
             'excerpt' => ['required', 'string', 'max:600'],
-            'category' => ['required', 'string', 'max:120'],
+            'category' => ['nullable', 'string', 'max:120', 'required_without:new_category'],
+            'new_category' => ['nullable', 'string', 'max:120'],
             'image' => ['nullable', 'string', 'max:1000'],
-            'image_upload' => ['nullable', 'image', 'max:5120'],
+            'image_upload' => ['nullable', 'image', 'max:20480'],
             'author' => ['required', 'string', 'max:120'],
             'published_at' => ['required', 'date'],
             'date_label' => ['nullable', 'string', 'max:120'],
@@ -110,7 +113,7 @@ class AdminBlogController extends Controller
             'title' => $validated['title'],
             'slug' => $slug,
             'excerpt' => $validated['excerpt'],
-            'category' => $validated['category'],
+            'category' => trim($validated['new_category'] ?? '') ?: trim($validated['category'] ?? ''),
             'image' => $image,
             'author' => $validated['author'],
             'published_at' => $validated['published_at'],
@@ -129,5 +132,19 @@ class AdminBlogController extends Controller
                 ->values()
                 ->all(),
         ];
+    }
+
+    private function categories(?string $currentCategory = null): array
+    {
+        return collect(config('site.blog_posts', []))
+            ->pluck('category')
+            ->merge(BlogPost::query()->distinct()->pluck('category'))
+            ->when($currentCategory, fn ($categories) => $categories->push($currentCategory))
+            ->filter()
+            ->map(fn (string $category): string => trim($category))
+            ->unique()
+            ->sort()
+            ->values()
+            ->all();
     }
 }

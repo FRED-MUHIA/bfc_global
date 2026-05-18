@@ -91,7 +91,7 @@ class AdminBookController extends Controller
             'price' => ['nullable', 'numeric', 'min:0', 'max:999999'],
             'currency' => ['required', 'string', 'size:3'],
             'cover_image' => ['nullable', 'string', 'max:800'],
-            'cover_upload' => ['nullable', 'image', 'max:5120'],
+            'cover_upload' => ['nullable', 'image', 'max:20480'],
             'format' => ['required', 'string', 'in:pdf,print,both'],
             'pdf_url' => ['nullable', 'string', 'max:800'],
             'purchase_url' => ['nullable', 'string', 'max:800'],

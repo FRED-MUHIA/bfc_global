@@ -23,8 +23,8 @@ class AdminMediaController extends Controller
     {
         $validated = $request->validate([
             'media' => $request->boolean('image_only')
-                ? ['required', 'image', 'max:5120']
-                : ['required', 'file', 'mimes:jpg,jpeg,png,webp,gif,svg,pdf,mp4,mov,webm', 'max:5120'],
+                ? ['required', 'image', 'max:20480']
+                : ['required', 'file', 'mimes:jpg,jpeg,png,webp,gif,svg,pdf,mp4,mov,webm', 'max:20480'],
             'name' => ['nullable', 'string', 'max:160'],
             'return_to' => ['nullable', 'string', 'in:dashboard'],
         ]);

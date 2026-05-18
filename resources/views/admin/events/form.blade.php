@@ -66,7 +66,7 @@
                     <span class="text-sm font-bold text-pine">Image URL or Path</span>
                     <input name="image" value="{{ old('image', $event['image']) }}" class="field-input">
                     <input type="file" name="image_upload" accept="image/*" class="field-input bg-white">
-                    <span class="text-xs font-semibold text-slate/60">Maximum upload size: 5 MB.</span>
+                    <span class="text-xs font-semibold text-slate/60">Maximum upload size: 20 MB.</span>
                 </label>
                 @if (!empty($event['image']))
                     <img src="{{ $event['image'] }}" alt="{{ $event['title'] }}" class="h-28 w-40 rounded-lg object-cover">

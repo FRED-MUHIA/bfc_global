@@ -45,7 +45,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const maxUploadSize = 5 * 1024 * 1024;
+            const maxUploadSize = 20 * 1024 * 1024;
 
             document.querySelectorAll('form[enctype="multipart/form-data"]').forEach((form) => {
                 form.addEventListener('submit', (event) => {
@@ -55,7 +55,7 @@
 
                     if (oversizedFile) {
                         event.preventDefault();
-                        alert(`"${oversizedFile.name}" is too large. Please upload an image under 5 MB.`);
+                        alert(`"${oversizedFile.name}" is too large. Please upload an image under 20 MB.`);
                     }
                 });
             });
