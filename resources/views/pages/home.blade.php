@@ -145,6 +145,7 @@
                     <article class="reveal-item min-w-full px-0 md:min-w-[50%] md:px-3 lg:min-w-[33.333%]" data-reveal style="--reveal-delay: {{ $loop->index * 100 }}ms;">
                         <button type="button" data-testimonial-open="home-testimonial-{{ $loop->index }}" class="glass-panel flex h-full w-full flex-col justify-between p-6 text-left transition hover:-translate-y-1 hover:shadow-soft focus:outline-none focus:ring-2 focus:ring-sage/30">
                             <p class="text-lg leading-relaxed text-slate/90">"{{ $quotePreview }}"</p>
+                            <span class="mt-4 inline-flex text-sm font-bold uppercase tracking-[0.12em] text-ember">Read more</span>
                             <div class="mt-6 flex w-full items-center gap-4 border-t border-sand pt-4">
                                 <img src="{{ $testimonial['image'] }}" alt="{{ $testimonial['name'] }}" class="h-14 w-14 shrink-0 rounded-full object-cover ring-2 ring-white shadow" loading="lazy" decoding="async" sizes="56px">
                                 <div>
